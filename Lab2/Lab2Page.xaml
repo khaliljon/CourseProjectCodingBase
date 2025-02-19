@@ -1,0 +1,39 @@
+<Page x:Class="CourseProjectCodingBase.Lab2.Lab2Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Lab 2">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Enter text:" FontSize="16" FontWeight="Bold"/>
+        <TextBox Name="InputTextBox" Height="30" Margin="0,5,0,10" Grid.Row="1"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Margin="0,10,0,10">
+            <Button Content="Huffman Coding" Click="EncodeHuffman" Padding="10,5" Margin="5"/>
+            <Button Content="Shannon-Fano Coding" Click="EncodeShannonFano" Padding="10,5" Margin="5"/>
+            <Button Content="Reed-Solomon Coding" Click="EncodeReedSolomon" Padding="10,5" Margin="5"/>
+        </StackPanel>
+
+        <TextBlock Text="Result:" FontSize="16" FontWeight="Bold" Grid.Row="3"/>
+        <ScrollViewer Grid.Row="3" Margin="0,5,0,0">
+            <TextBox Name="OutputTextBox" Height="100" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+        </ScrollViewer>
+
+        <TextBlock Text="Huffman Codes:" FontSize="16" FontWeight="Bold" Grid.Row="4" Margin="0,10,0,5"/>
+        <DataGrid Name="HuffmanCodesGrid" Grid.Row="4" AutoGenerateColumns="False" Height="150" Margin="0,5,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="Auto"/>
+                <DataGridTextColumn Header="Code" Binding="{Binding Code}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Content="Clear" Click="ClearButton_Click" Grid.Row="5" HorizontalAlignment="Center" Padding="10,5" Margin="5"/>
+    </Grid>
+</Page>

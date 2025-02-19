@@ -1,0 +1,26 @@
+<Page x:Class="CourseProjectCodingBase.Lab3.Lab3Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Lab 3">
+    <Grid Margin="20">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+            <TextBlock Text="Message Transmission System Analysis" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+                <Button Content="Generate Signal" Click="GenerateSignal_Click" Margin="5"/>
+                <Button Content="Add Noise" Click="AddNoise_Click" Margin="5"/>
+                <Button Content="Remove Values" Click="RemoveValues_Click" Margin="5"/>
+                <Button Content="Clear Memory" Click="ClearMemory_Click" Margin="5"/>
+            </StackPanel>
+
+            <TextBlock Text="Original Signal" FontSize="16" FontWeight="Bold" Margin="0,10,0,5"/>
+            <Canvas Name="OriginalCanvas" Width="600" Height="100" Background="White" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Noisy Signal" FontSize="16" FontWeight="Bold" Margin="0,10,0,5"/>
+            <Canvas Name="NoisyCanvas" Width="600" Height="100" Background="White" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Processed Signal" FontSize="16" FontWeight="Bold" Margin="0,10,0,5"/>
+            <Canvas Name="ProcessedCanvas" Width="600" Height="100" Background="White" Margin="0,0,0,10"/>
+        </StackPanel>
+    </Grid>
+</Page>
