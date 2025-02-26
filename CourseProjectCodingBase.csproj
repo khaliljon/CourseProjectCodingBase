@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1E5356E8-B4FD-4915-8BFF-E005E56E3D9C}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>CourseProjectCodingBase</RootNamespace>
     <AssemblyName>CourseProjectCodingBase</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -57,7 +57,6 @@
     </ApplicationDefinition>
     <Compile Include="Lab2\Model\ReedSolomonCoding.cs" />
     <Compile Include="Lab2\Model\ShannonFanoCoding.cs" />
-    <Compile Include="Lab2\Model\SymbolFrequency.cs" />
     <Page Include="Lab2\Lab2Page.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

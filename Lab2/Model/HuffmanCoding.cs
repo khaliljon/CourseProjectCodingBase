@@ -109,7 +109,7 @@ namespace CourseProjectCodingBase.Model
             Left = left;
             Right = right;
             Frequency = left.Frequency + right.Frequency;
-            Symbol = left.Symbol < right.Symbol ? left.Symbol : right.Symbol; // Берем минимальный символ
+            Symbol = left.Symbol < right.Symbol ? left.Symbol : right.Symbol; 
         }
 
         public bool IsLeaf() => Left == null && Right == null;
