@@ -55,12 +55,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Lab2\Model\ReedSolomonCoding.cs" />
-    <Compile Include="Lab2\Model\ShannonFanoCoding.cs" />
+    <Compile Include="Model\LZW.cs" />
+    <Compile Include="Model\ReedSolomonCoding.cs" />
+    <Compile Include="Model\ShannonFanoCoding.cs" />
     <Page Include="Lab2\Lab2Page.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Lab3\Lab3Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Lab4\Lab4Page.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
@@ -71,12 +76,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Lab2\Model\HuffmanCoding.cs" />
+    <Compile Include="Model\HuffmanCoding.cs" />
     <Compile Include="Lab2\Lab2Page.xaml.cs">
       <DependentUpon>Lab2Page.xaml</DependentUpon>
     </Compile>
     <Compile Include="Lab3\Lab3Page.xaml.cs">
       <DependentUpon>Lab3Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Lab4\Lab4Page.xaml.cs">
+      <DependentUpon>Lab4Page.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -108,6 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Lab4\Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

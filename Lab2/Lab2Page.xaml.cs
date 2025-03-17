@@ -59,6 +59,7 @@ namespace CourseProjectCodingBase.Lab2
             OutputTextBox.Text = $"Encoded: {encodedText}\nCompression Ratio: {compressionRatio:P2}";
         }
 
+
         private void EncodeReedSolomon(object sender, RoutedEventArgs e)
         {
             string input = InputTextBox.Text;

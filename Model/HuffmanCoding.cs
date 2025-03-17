@@ -20,10 +20,12 @@ namespace CourseProjectCodingBase.Model
             return string.Concat(input.Select(c => _codes[c]));
         }
 
-        public string Decode(string encodedInput)
+        public string Decode(string encodedInput, int originalLength)
         {
             var result = new StringBuilder();
             var current = _root;
+            int decodedLength = 0;
+
             foreach (var bit in encodedInput)
             {
                 current = bit == '0' ? current.Left : current.Right;
@@ -31,6 +33,11 @@ namespace CourseProjectCodingBase.Model
                 {
                     result.Append(current.Symbol);
                     current = _root;
+                    decodedLength++;
+
+                    // Останавливаем декодирование, когда достигнута длина исходного сообщения
+                    if (decodedLength == originalLength)
+                        break;
                 }
             }
             return result.ToString();
@@ -40,7 +47,7 @@ namespace CourseProjectCodingBase.Model
         {
             double averageCodeLength = input.Sum(c => _codes[c].Length) / (double)input.Length;
             double originalBitSize = input.Length * 8;
-            double encodedBitSize = input.Length * averageCodeLength;
+            double encodedBitSize = encoded.Length;
             return (originalBitSize - encodedBitSize) / originalBitSize;
         }
 
@@ -54,7 +61,7 @@ namespace CourseProjectCodingBase.Model
             while (nodes.Count > 1)
             {
                 nodes = nodes.OrderBy(n => n.Frequency)
-                             .ThenBy(n => n.Symbol) 
+                             .ThenBy(n => n.Symbol)
                              .ToList();
 
                 var left = nodes[0];
@@ -109,7 +116,7 @@ namespace CourseProjectCodingBase.Model
             Left = left;
             Right = right;
             Frequency = left.Frequency + right.Frequency;
-            Symbol = left.Symbol < right.Symbol ? left.Symbol : right.Symbol; 
+            Symbol = left.Symbol < right.Symbol ? left.Symbol : right.Symbol; // Берем минимальный символ
         }
 
         public bool IsLeaf() => Left == null && Right == null;
