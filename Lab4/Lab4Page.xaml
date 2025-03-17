@@ -3,29 +3,19 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Lab4Page">
 
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        
-        <!-- Кнопка загрузки файла -->
-        <Button Content="Загрузить файл" Grid.Row="0" Click="LoadFileButton_Click" Margin="5"/>
-
-        <!-- Поле выбора метода сжатия -->
-        <ComboBox x:Name="CompressionMethodComboBox" Grid.Row="0" Margin="5" HorizontalAlignment="Right" Width="200">
-            <ComboBoxItem Content="Huffman" />
-            <ComboBoxItem Content="LZW" />
-        </ComboBox>
-
-        <!-- Кнопки для действий -->
-        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="Сжать" Click="CompressButton_Click" Margin="5"/>
-            <Button Content="Сохранить" Click="SaveButton_Click" Margin="5"/>
-            <Button Content="Декодировать" Click="DecodeButton_Click" Margin="5"/>
+    <Grid>
+        <StackPanel>
+            <Button Name="LoadFileButton" Content="Загрузить файл" Click="LoadFileButton_Click" />
+            <ComboBox Name="CompressionMethodComboBox">
+                <ComboBoxItem Content="Huffman" />
+                <ComboBoxItem Content="LZW" />
+            </ComboBox>
+            <Button Name="CompressButton" Content="Сжать" Click="CompressButton_Click" />
+            <Button Name="SaveButton" Content="Сохранить" Click="SaveButton_Click" />
+            <Button Name="DecodeButton" Content="Декодировать" Click="DecodeButton_Click" />
+            <Button Name="ClearButton" Content="Очистить" Click="ClearButton_Click" />
+            <!-- Новая кнопка очистки -->
+            <TextBox Name="OutputTextBox" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="200" />
         </StackPanel>
-
-        <!-- Окно вывода информации -->
-        <TextBox x:Name="OutputTextBox" Grid.Row="1" Margin="5" VerticalAlignment="Bottom" Height="100" IsReadOnly="True" TextWrapping="Wrap"/>
     </Grid>
 </Page>

@@ -134,5 +134,13 @@ namespace CourseProjectCodingBase.Lab4
             }
             return sb.ToString();
         }
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            loadedFilePath = null;
+            compressedData = null;
+            OutputTextBox.Clear();
+            CompressionMethodComboBox.SelectedIndex = -1;
+            MessageBox.Show("Все данные очищены.");
+        }
     }
 }
