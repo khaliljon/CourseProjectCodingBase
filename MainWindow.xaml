@@ -9,7 +9,7 @@
                 <Button Content="Лабораторная 2" Click="OpenLab2" Margin="5"/>
                 <Button Content="Лабораторная 3" Click="OpenLab3" Margin="5"/>
                 <Button Content="Лабораторная 4" Click="OpenLab4" Margin="5"/>
-                <!-- Добавлена кнопка для Лабораторной работы 4 -->
+                <Button Content="Лабораторная 5" Click="OpenLab5" Margin="5"/>
             </StackPanel>
 
             <Frame Name="MainFrame" NavigationUIVisibility="Hidden" />
