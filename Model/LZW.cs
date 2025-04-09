@@ -6,9 +6,8 @@ public class LZW
 {
     public List<int> Compress(string input)
     {
-        // Создаем и инициализируем словарь начальными символами Unicode
         Dictionary<string, int> dictionary = new Dictionary<string, int>();
-        for (int i = 0; i < 65536; i++) // 65536 - количество символов в Unicode Basic Multilingual Plane
+        for (int i = 0; i < 65536; i++) 
         {
             dictionary.Add(((char)i).ToString(), i);
         }
@@ -44,9 +43,8 @@ public class LZW
         if (compressed == null || compressed.Count == 0)
             throw new ArgumentException("Список закодированных данных пуст.");
 
-        // Создаем и инициализируем словарь начальными символами Unicode
         Dictionary<int, string> dictionary = new Dictionary<int, string>();
-        for (int i = 0; i < 65536; i++) // 65536 - количество символов в Unicode Basic Multilingual Plane
+        for (int i = 0; i < 65536; i++) 
         {
             dictionary.Add(i, ((char)i).ToString());
         }
@@ -74,7 +72,6 @@ public class LZW
 
             decompressed.Append(entry);
 
-            // Добавляем новую последовательность в словарь
             dictionary.Add(dictSize++, current + entry[0]);
             current = entry;
         }

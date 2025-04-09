@@ -92,8 +92,8 @@ namespace CourseProjectCodingBase.Lab4
             if (method == "Huffman")
             {
                 string encodedText = ConvertToString(compressedData);
-                string inputText = File.ReadAllText(loadedFilePath); // Получаем исходный текст
-                decodedText = huffmanCoding.Decode(encodedText, inputText.Length); // Передаем длину исходного текста
+                string inputText = File.ReadAllText(loadedFilePath); 
+                decodedText = huffmanCoding.Decode(encodedText, inputText.Length); 
             }
             else if (method == "LZW")
             {
