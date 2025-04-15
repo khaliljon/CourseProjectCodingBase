@@ -3,99 +3,116 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-namespace CourseProject.Lab5
+namespace CourseProjectCodingBase.Lab5
 {
-    public partial class Lab5Window
+    public partial class Lab5Page : Page
     {
-        private Bitmap? _originalBitmap;
-        private Bitmap? _compressedBitmap;
-        private MemoryStream? _jpegMemoryStream;
+        private string originalFilePath;
+        private string compressedFilePath;
 
-        public Lab5Window()
+        public Lab5Page()
         {
             InitializeComponent();
         }
 
-        private void LoadFileButton_Click(object sender, RoutedEventArgs e)
+        private void LoadImage_Click(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog { Filter = "Image files (*.bmp;*.png)|*.bmp;*.png" };
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Изображения (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png"
+            };
+
             if (openFileDialog.ShowDialog() == true)
             {
-                OriginalImage.Source = null;
-                CompressedImage.Source = null;
+                originalFilePath = openFileDialog.FileName;
 
-                _originalBitmap = new Bitmap(openFileDialog.FileName);
-                OriginalImage.Source = BitmapToImageSource(_originalBitmap);
-                _compressedBitmap = null;
-                _jpegMemoryStream = null;
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                using (FileStream stream = new FileStream(originalFilePath, FileMode.Open, FileAccess.Read))
+                {
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.StreamSource = stream;
+                    bitmap.EndInit();
+                    bitmap.Freeze(); 
+                    OriginalImage.Source = bitmap;
+                }
+
+                long fileSize = new FileInfo(originalFilePath).Length;
+                OriginalSizeText.Text = $"Размер: {fileSize / 1024} KB";
             }
         }
 
-        private void CompressButton_Click(object sender, RoutedEventArgs e)
+        private void CompressImage_Click(object sender, RoutedEventArgs e)
         {
-            if (_originalBitmap == null)
+            if (string.IsNullOrEmpty(originalFilePath))
             {
                 MessageBox.Show("Сначала загрузите изображение.");
                 return;
             }
 
-            ProgressBar.Visibility = Visibility.Visible;
-            var quality = 100 - (int)CompressionSlider.Value;
+            int quality = (int)QualitySlider.Value;
+            compressedFilePath = Path.Combine(Path.GetTempPath(), "compressed.jpg");
 
-            _jpegMemoryStream = new MemoryStream();
-            var encoder = GetEncoder(ImageFormat.Jpeg);
-            var encoderParameters = new EncoderParameters(1);
-            encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, quality);
+            using (Bitmap bitmap = new Bitmap(originalFilePath))
+            {
+                ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
+                EncoderParameters encoderParams = new EncoderParameters(1);
+                encoderParams.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
+                bitmap.Save(compressedFilePath, jpgEncoder, encoderParams);
+            }
 
-            _originalBitmap.Save(_jpegMemoryStream, encoder, encoderParameters);
-            _jpegMemoryStream.Seek(0, SeekOrigin.Begin);
-            _compressedBitmap = new Bitmap(_jpegMemoryStream);
-            CompressedImage.Source = BitmapToImageSource(_compressedBitmap);
-            ProgressBar.Visibility = Visibility.Collapsed;
+            CompressedImage.Source = new BitmapImage(new Uri(compressedFilePath));
+
+            long compressedSize = new FileInfo(compressedFilePath).Length;
+            CompressedSizeText.Text = $"Размер: {compressedSize / 1024} KB";
+
+            MessageBox.Show($"Сжатие завершено. Размер: {compressedSize / 1024} KB");
         }
 
-        private void SaveImageButton_Click(object sender, RoutedEventArgs e)
+        private void SaveImage_Click(object sender, RoutedEventArgs e)
         {
-            if (_jpegMemoryStream == null)
+            if (compressedFilePath == null)
             {
                 MessageBox.Show("Сначала выполните сжатие изображения.");
                 return;
             }
 
-            var saveFileDialog = new SaveFileDialog
+            SaveFileDialog saveFileDialog = new SaveFileDialog
             {
-                Filter = "JPEG Image|*.jpg",
-                FileName = "Compressed_image.jpg"
+                Filter = "JPEG Image (*.jpg)|*.jpg"
             };
 
             if (saveFileDialog.ShowDialog() == true)
             {
-                File.WriteAllBytes(saveFileDialog.FileName, _jpegMemoryStream.ToArray());
-                MessageBox.Show($"Изображение сохранено по пути: {saveFileDialog.FileName}");
+                File.Copy(compressedFilePath, saveFileDialog.FileName, true);
+                MessageBox.Show("Изображение сохранено.");
             }
         }
 
-        private static BitmapImage BitmapToImageSource(Bitmap bitmap)
+        private void ClearImages_Click(object sender, RoutedEventArgs e)
         {
-            using var memory = new MemoryStream();
-            bitmap.Save(memory, ImageFormat.Bmp);
-            memory.Position = 0;
+            OriginalImage.Source = null;
+            CompressedImage.Source = null;
 
-            var bitmapImage = new BitmapImage();
-            bitmapImage.BeginInit();
-            bitmapImage.StreamSource = memory;
-            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-            bitmapImage.EndInit();
+            originalFilePath = null;
+            compressedFilePath = null;
 
-            return bitmapImage;
+            OriginalSizeText.Text = "Размер: -";
+            CompressedSizeText.Text = "Размер: -";
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
-        private static ImageCodecInfo GetEncoder(ImageFormat format)
+
+        private ImageCodecInfo GetEncoder(ImageFormat format)
         {
             ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
             foreach (ImageCodecInfo codec in codecs)
@@ -105,7 +122,7 @@ namespace CourseProject.Lab5
                     return codec;
                 }
             }
-            throw new Exception("JPEG encoder not found");
+            return null;
         }
     }
 }
