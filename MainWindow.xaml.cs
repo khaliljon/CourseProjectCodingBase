@@ -1,8 +1,4 @@
-﻿using CourseProjectCodingBase.Lab2;
-using CourseProjectCodingBase.Lab3;
-using CourseProjectCodingBase.Lab4;
-using CourseProjectCodingBase.Lab5; // Добавляем пространство имен для Лабораторной работы 5
-using System.Windows;
+﻿using System.Windows;
 
 namespace CourseProjectCodingBase
 {
@@ -15,22 +11,28 @@ namespace CourseProjectCodingBase
 
         private void OpenLab2(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new Lab2Page());
+            MainFrame.Source = new System.Uri("Lab2/Lab2Page.xaml", System.UriKind.Relative);
         }
 
         private void OpenLab3(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new Lab3Page());
+            MainFrame.Source = new System.Uri("Lab3/Lab3Page.xaml", System.UriKind.Relative);
         }
 
         private void OpenLab4(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new Lab4Page());
+            MainFrame.Source = new System.Uri("Lab4/Lab4Page.xaml", System.UriKind.Relative);
         }
 
-        private void OpenLab5(object sender, RoutedEventArgs e) // Добавлен метод для Лабораторной работы 5
+        private void OpenLab5(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new Lab5Page());
+            MainFrame.Source = new System.Uri("Lab5/Lab5Page.xaml", System.UriKind.Relative);
+        }
+
+        private void ExitApp(object sender, RoutedEventArgs e)
+        {
+            // Завершение работы приложения
+            Application.Current.Shutdown();
         }
     }
 }

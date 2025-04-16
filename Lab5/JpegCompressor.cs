@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Text;
 using CourseProject.Lab2;
 using CourseProjectCodingBase.Model;
 
-namespace CourseProject.Lab5
+namespace CourseProjectCodingBase.Lab5
 {
     public static class JpegCompressor
     {
@@ -31,7 +31,7 @@ namespace CourseProject.Lab5
                 }
 
             // --- STEP 2: Subsampling ---
-            int chromaWidth = use420 ? width / 2 : width / 2;
+            int chromaWidth = use420 ? width / 2 : width; // Исправлено для 4:2:2
             int chromaHeight = use420 ? height / 2 : height;
 
             double[,] CbSub = new double[chromaHeight, chromaWidth];
@@ -146,7 +146,7 @@ namespace CourseProject.Lab5
                     double[,] block = GetBlock(matrix, x, y);
                     double[,] quantizedBlock = QuantizeBlock(block, Q);
                     int[] zigzagArray = ZigzagScan(quantizedBlock);
-                    string rleEncoded = rle.Encode(string.Join(",", zigzagArray));
+                    var rleEncoded = rle.Encode(zigzagArray); // Исправлено: передача массива
                     compressed.Append(huffman.Encode(rleEncoded));
                     compressed.Append(";");
                 }

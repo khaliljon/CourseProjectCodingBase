@@ -58,10 +58,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Lab5\IEncodingAlgorithm.cs" />
     <Compile Include="Lab5\JpegCompressor.cs" />
     <Compile Include="Lab5\Lab5Page.xaml.cs">
       <DependentUpon>Lab5Page.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Lab5\RleCoding.cs" />
     <Compile Include="Model\LZW.cs" />
     <Compile Include="Model\ReedSolomonCoding.cs" />
     <Compile Include="Model\ShannonFanoCoding.cs" />

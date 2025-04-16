@@ -1,22 +1,21 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-namespace CourseProject.Lab5
+namespace CourseProjectCodingBase.Lab5
 {
-    public partial class Lab5Window
+    public partial class Lab5Page : Page
     {
-        private Bitmap? _originalBitmap;
-        private Bitmap? _compressedBitmap;
-        private MemoryStream? _jpegMemoryStream;
+        private Bitmap _originalBitmap;
+        private Bitmap _compressedBitmap;
+        private MemoryStream _jpegMemoryStream;
 
-        public Lab5Window()
+        public Lab5Page()
         {
             InitializeComponent();
         }
@@ -33,6 +32,10 @@ namespace CourseProject.Lab5
                 OriginalImage.Source = BitmapToImageSource(_originalBitmap);
                 _compressedBitmap = null;
                 _jpegMemoryStream = null;
+
+                // Вывод объема исходного изображения
+                FileInfo fileInfo = new FileInfo(openFileDialog.FileName);
+                ImageInfoText.Text = $"Объем исходного изображения: {fileInfo.Length / 1024.0:F2} КБ";
             }
         }
 
@@ -44,19 +47,32 @@ namespace CourseProject.Lab5
                 return;
             }
 
-            ProgressBar.Visibility = Visibility.Visible;
-            var quality = 100 - (int)CompressionSlider.Value;
+            try
+            {
+                ProgressBar.Visibility = Visibility.Visible;
+                var quality = 100 - (int)CompressionSlider.Value;
 
-            _jpegMemoryStream = new MemoryStream();
-            var encoder = GetEncoder(ImageFormat.Jpeg);
-            var encoderParameters = new EncoderParameters(1);
-            encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, quality);
+                _jpegMemoryStream = new MemoryStream();
+                var encoder = GetEncoder(ImageFormat.Jpeg);
+                var encoderParameters = new EncoderParameters(1);
+                encoderParameters.Param[0] = new EncoderParameter(Encoder.Quality, quality);
 
-            _originalBitmap.Save(_jpegMemoryStream, encoder, encoderParameters);
-            _jpegMemoryStream.Seek(0, SeekOrigin.Begin);
-            _compressedBitmap = new Bitmap(_jpegMemoryStream);
-            CompressedImage.Source = BitmapToImageSource(_compressedBitmap);
-            ProgressBar.Visibility = Visibility.Collapsed;
+                _originalBitmap.Save(_jpegMemoryStream, encoder, encoderParameters);
+                _jpegMemoryStream.Seek(0, SeekOrigin.Begin);
+                _compressedBitmap = new Bitmap(_jpegMemoryStream);
+                CompressedImage.Source = BitmapToImageSource(_compressedBitmap);
+
+                // Вывод объема сжатого изображения
+                ImageInfoText.Text += $"\nОбъем сжатого изображения: {_jpegMemoryStream.Length / 1024.0:F2} КБ";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сжатии изображения: {ex.Message}");
+            }
+            finally
+            {
+                ProgressBar.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void SaveImageButton_Click(object sender, RoutedEventArgs e)
@@ -73,26 +89,59 @@ namespace CourseProject.Lab5
                 FileName = "Compressed_image.jpg"
             };
 
-            if (saveFileDialog.ShowDialog() == true)
+            try
             {
-                File.WriteAllBytes(saveFileDialog.FileName, _jpegMemoryStream.ToArray());
-                MessageBox.Show($"Изображение сохранено по пути: {saveFileDialog.FileName}");
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    File.WriteAllBytes(saveFileDialog.FileName, _jpegMemoryStream.ToArray());
+                    MessageBox.Show($"Изображение сохранено по пути: {saveFileDialog.FileName}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сохранении изображения: {ex.Message}");
+            }
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Очистка всех данных
+            _originalBitmap = null;
+            _compressedBitmap = null;
+            _jpegMemoryStream = null;
+
+            OriginalImage.Source = null;
+            CompressedImage.Source = null;
+            ImageInfoText.Text = "Объем исходного и сжатого изображения будет отображаться здесь.";
+            CompressionSlider.Value = 50;
+            CompressionQualityText.Text = "50";
+
+            MessageBox.Show("Все данные были очищены.");
+        }
+
+        private void CompressionSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (CompressionQualityText != null)
+            {
+                CompressionQualityText.Text = ((int)CompressionSlider.Value).ToString();
             }
         }
 
         private static BitmapImage BitmapToImageSource(Bitmap bitmap)
         {
-            using var memory = new MemoryStream();
-            bitmap.Save(memory, ImageFormat.Bmp);
-            memory.Position = 0;
+            using (var memory = new MemoryStream())
+            {
+                bitmap.Save(memory, ImageFormat.Bmp);
+                memory.Position = 0;
 
-            var bitmapImage = new BitmapImage();
-            bitmapImage.BeginInit();
-            bitmapImage.StreamSource = memory;
-            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-            bitmapImage.EndInit();
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
 
-            return bitmapImage;
+                return bitmapImage;
+            }
         }
 
         private static ImageCodecInfo GetEncoder(ImageFormat format)
@@ -105,7 +154,7 @@ namespace CourseProject.Lab5
                     return codec;
                 }
             }
-            throw new Exception("JPEG encoder not found");
+            throw new InvalidOperationException("JPEG encoder not found.");
         }
     }
 }

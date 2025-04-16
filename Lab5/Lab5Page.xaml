@@ -1,14 +1,46 @@
-﻿<Window x:Class="CourseProject.Lab5.Lab5Window"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Lab5Window" Height="450" Width="800">
+<Page x:Class="CourseProjectCodingBase.Lab5.Lab5Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Lab5Page">
     <Grid>
-        <Button Name="LoadFileButton" Content="Загрузить изображение" Click="LoadFileButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
-        <Button Name="CompressButton" Content="Сжать изображение" Click="CompressButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,40,0,0"/>
-        <Button Name="SaveImageButton" Content="Сохранить изображение" Click="SaveImageButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,0,0"/>
-        <Slider Name="CompressionSlider" Minimum="0" Maximum="100" Value="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,120,0,0" Width="100"/>
-        <ProgressBar Name="ProgressBar" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,160,0,0" Width="100" Visibility="Collapsed"/>
-        <Image Name="OriginalImage" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="150,10,0,0" Width="300" Height="300"/>
-        <Image Name="CompressedImage" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="460,10,0,0" Width="300" Height="300"/>
+        <!-- Кнопка для загрузки изображения -->
+        <Button Name="LoadFileButton" Content="Загрузить изображение" Click="LoadFileButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+
+        <!-- Кнопка для сжатия изображения -->
+        <Button Name="CompressButton" Content="Сжать изображение" Click="CompressButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,50,0,0"/>
+
+        <!-- Кнопка для сохранения изображения -->
+        <Button Name="SaveImageButton" Content="Сохранить изображение" Click="SaveImageButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,90,0,0"/>
+
+        <!-- Кнопка для очистки -->
+        <Button Name="ClearButton" Content="Очистить" Click="ClearButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,130,0,0"/>
+
+        <!-- Слайдер для регулировки уровня сжатия -->
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,180,0,0">
+            <TextBlock Text="Качество:" Margin="0,0,0,5"/>
+            <Slider Name="CompressionSlider" Minimum="0" Maximum="100" Value="50" ValueChanged="CompressionSlider_ValueChanged" Width="150"/>
+            <TextBlock Name="CompressionQualityText" Text="50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- Прогресс-бар для отображения процесса сжатия -->
+        <ProgressBar Name="ProgressBar" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,240,0,0" Width="150" Visibility="Collapsed"/>
+
+        <!-- Исходное изображение -->
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="170,10,0,0">
+            <TextBlock Text="Исходное изображение:" Margin="0,0,0,5"/>
+            <Image Name="OriginalImage" Width="300" Height="300" Margin="0,0,0,10"/>
+        </StackPanel>
+
+        <!-- Сжатое изображение -->
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="170,320,0,0">
+            <TextBlock Text="Сжатое изображение:" Margin="0,0,0,5"/>
+            <Image Name="CompressedImage" Width="300" Height="300" Margin="0,0,0,10"/>
+        </StackPanel>
+
+        <!-- Текстовый блок для вывода информации -->
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="500,10,0,0">
+            <TextBlock Text="Информация:" Margin="0,0,0,5"/>
+            <TextBlock Name="ImageInfoText" Text="Объем исходного и сжатого изображения будет отображаться здесь." TextWrapping="Wrap" Width="250"/>
+        </StackPanel>
     </Grid>
-</Window>
+</Page>
