@@ -9,6 +9,11 @@ namespace CourseProjectCodingBase
             InitializeComponent();
         }
 
+        private void OpenLab1(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Source = new System.Uri("Lab1/Lab1Page.xaml", System.UriKind.Relative);
+        }
+
         private void OpenLab2(object sender, RoutedEventArgs e)
         {
             MainFrame.Source = new System.Uri("Lab2/Lab2Page.xaml", System.UriKind.Relative);

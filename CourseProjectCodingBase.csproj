@@ -58,6 +58,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Lab1\Lab1Page.xaml.cs">
+      <DependentUpon>Lab1Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Lab5\IEncodingAlgorithm.cs" />
     <Compile Include="Lab5\JpegCompressor.cs" />
     <Compile Include="Lab5\Lab5Page.xaml.cs">
@@ -67,6 +70,7 @@
     <Compile Include="Model\LZW.cs" />
     <Compile Include="Model\ReedSolomonCoding.cs" />
     <Compile Include="Model\ShannonFanoCoding.cs" />
+    <Page Include="Lab1\Lab1Page.xaml" />
     <Page Include="Lab2\Lab2Page.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

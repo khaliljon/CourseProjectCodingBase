@@ -4,36 +4,66 @@
       Title="Lab 2">
     <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/> <!-- Заголовок -->
+            <RowDefinition Height="Auto"/> <!-- Введите текст -->
+            <RowDefinition Height="Auto"/> <!-- TextBox -->
+            <RowDefinition Height="Auto"/> <!-- Кнопки -->
+            <RowDefinition Height="Auto"/> <!-- Результат -->
+            <RowDefinition Height="Auto"/> <!-- Вывод -->
+            <RowDefinition Height="Auto"/> <!-- Коды Хаффмана (заголовок) -->
+            <RowDefinition Height="*"/>    <!-- Коды Хаффмана (таблица) -->
+            <RowDefinition Height="Auto"/> <!-- Кнопка Очистить -->
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Enter text:" FontSize="16" FontWeight="Bold"/>
-        <TextBox Name="InputTextBox" Height="30" Margin="0,5,0,10" Grid.Row="1"/>
+        <!-- Заголовок страницы -->
+        <TextBlock Text="Лабораторная работа №2" 
+                   FontSize="20" FontWeight="Bold" Foreground="#34495E" 
+                   Margin="0,0,0,20" Grid.Row="0" TextAlignment="Center" HorizontalAlignment="Center"/>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Margin="0,10,0,10">
-            <Button Content="Huffman Coding" Click="EncodeHuffman" Padding="10,5" Margin="5"/>
-            <Button Content="Shannon-Fano Coding" Click="EncodeShannonFano" Padding="10,5" Margin="5"/>
-            <Button Content="Reed-Solomon Coding" Click="EncodeReedSolomon" Padding="10,5" Margin="5"/>
-        </StackPanel>
+        <!-- Заголовок ввода текста -->
+        <TextBlock Text="Введите текст:" FontSize="18" FontWeight="Bold" Foreground="#34495E" Grid.Row="1"/>
+        <TextBox Name="InputTextBox" Height="30" Margin="0,5,0,10" Grid.Row="2" FontSize="14" Padding="5" BorderBrush="#BDC3C7" BorderThickness="1"/>
 
-        <TextBlock Text="Result:" FontSize="16" FontWeight="Bold" Grid.Row="3"/>
-        <ScrollViewer Grid.Row="3" Margin="0,5,0,0">
-            <TextBox Name="OutputTextBox" Height="100" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+        <!-- Панель с кнопками кодирования -->
+        <WrapPanel Grid.Row="3" HorizontalAlignment="Center" Margin="0,10,0,10">
+            <Button Content="Кодирование Хаффмана"
+                    Click="EncodeHuffman"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Margin="5"
+                    Padding="10,5" />
+    
+            <Button Content="Кодирование Шеннона-Фано"
+                    Click="EncodeShannonFano"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Margin="5"
+                    Padding="10,5" />
+
+            <Button Content="Кодирование Рида-Соломона"
+                    Click="EncodeReedSolomon"
+                    Style="{StaticResource MenuButtonStyle}"
+                    Margin="5"
+                    Padding="10,5" />
+        </WrapPanel>
+
+        <!-- Отображение результатов -->
+        <TextBlock Text="Результат:" FontSize="18" FontWeight="Bold" Foreground="#34495E" Grid.Row="4" Margin="0,10,0,5"/>
+        <ScrollViewer Grid.Row="5" Margin="0,5,0,0" Height="100">
+            <TextBox Name="OutputTextBox" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" FontSize="14" Padding="5" BorderBrush="#BDC3C7" BorderThickness="1" Background="#ECF0F1"/>
         </ScrollViewer>
 
-        <TextBlock Text="Huffman Codes:" FontSize="16" FontWeight="Bold" Grid.Row="4" Margin="0,10,0,5"/>
-        <DataGrid Name="HuffmanCodesGrid" Grid.Row="4" AutoGenerateColumns="False" Height="150" Margin="0,5,0,0">
+        <!-- Заголовок таблицы -->
+        <TextBlock Text="Коды Хаффмана:" FontSize="18" FontWeight="Bold" Foreground="#34495E" Grid.Row="6" Margin="0,10,0,10"/>
+
+        <!-- Таблица с кодами Хаффмана -->
+        <DataGrid Name="HuffmanCodesGrid" Grid.Row="7" AutoGenerateColumns="False" Height="150" Margin="0,0,0,0" BorderBrush="#BDC3C7" BorderThickness="1" RowBackground="#ECF0F1" AlternatingRowBackground="#E0E0E0">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Symbol" Binding="{Binding Symbol}" Width="Auto"/>
-                <DataGridTextColumn Header="Code" Binding="{Binding Code}" Width="*"/>
+                <DataGridTextColumn Header="Символ" Binding="{Binding Symbol}" Width="Auto" FontSize="14"/>
+                <DataGridTextColumn Header="Код" Binding="{Binding Code}" Width="*" FontSize="14"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Content="Clear" Click="ClearButton_Click" Grid.Row="5" HorizontalAlignment="Center" Padding="10,5" Margin="5"/>
+        <!-- Кнопка очистки -->
+        <Button Content="Очистить" Click="ClearButton_Click" Grid.Row="8" HorizontalAlignment="Center" 
+                Style="{StaticResource MenuButtonStyle}" Width="120" Height="35" Margin="0,10,0,10"/>
     </Grid>
 </Page>

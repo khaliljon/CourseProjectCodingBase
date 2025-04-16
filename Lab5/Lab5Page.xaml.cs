@@ -123,7 +123,7 @@ namespace CourseProjectCodingBase.Lab5
         {
             if (CompressionQualityText != null)
             {
-                CompressionQualityText.Text = ((int)CompressionSlider.Value).ToString();
+                CompressionQualityText.Text = $"{(int)CompressionSlider.Value}%";
             }
         }
 

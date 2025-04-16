@@ -60,12 +60,18 @@ namespace CourseProjectCodingBase.Lab3
 
         private void DrawChart(List<double> signal, Canvas canvas)
         {
-            canvas.Children.Clear(); 
+            canvas.Children.Clear();
 
             if (signal.Count == 0) return;
 
-            double xStep = CanvasWidth / (double)signal.Count;
-            double yMid = CanvasHeight / 2;
+            double actualWidth = canvas.ActualWidth > 0 ? canvas.ActualWidth : canvas.Width;
+            double actualHeight = canvas.ActualHeight > 0 ? canvas.ActualHeight : canvas.Height;
+
+            double xStep = actualWidth / signal.Count;
+            double yMid = actualHeight / 2;
+
+            double maxAmplitude = signal.Where(v => !double.IsNaN(v)).Select(Math.Abs).DefaultIfEmpty(1).Max();
+            double scale = (yMid - 5) / maxAmplitude; // -5 для небольшого отступа от границ
 
             Polyline polyline = new Polyline
             {
@@ -75,17 +81,16 @@ namespace CourseProjectCodingBase.Lab3
 
             for (int i = 0; i < signal.Count; i++)
             {
-                if (double.IsNaN(signal[i])) continue; 
+                if (double.IsNaN(signal[i])) continue;
 
                 double x = i * xStep;
-                double y = yMid - (signal[i] * (CanvasHeight / 2)); 
+                double y = yMid - (signal[i] * scale);
 
                 polyline.Points.Add(new Point(x, y));
             }
 
             canvas.Children.Add(polyline);
         }
-
         private void ClearMemory_Click(object sender, RoutedEventArgs e)
         {
             signal.Clear();

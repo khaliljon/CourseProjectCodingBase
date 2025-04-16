@@ -1,0 +1,39 @@
+﻿<Page x:Class="CourseProjectCodingBase.Lab1.Lab1Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Lab 1">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Text="Лабораторная работа №1" 
+                   FontSize="20" FontWeight="Bold" Foreground="#34495E" 
+                   Margin="0,0,0,20" Grid.Row="0" TextAlignment="Center"/>
+
+        <!-- Основной контент -->
+        <StackPanel Grid.Row="1">
+            <!-- Ввод алфавита -->
+            <TextBlock Text="Алфавит (введите символы через запятую):" Margin="0,0,0,5"/>
+            <TextBox Name="AlphabetInput" Width="300" Margin="0,0,0,10"/>
+
+            <!-- Ввод вероятностей -->
+            <TextBlock Text="Вероятности (введите через запятую):" Margin="0,0,0,5"/>
+            <TextBox Name="ProbabilitiesInput" Width="300" Margin="0,0,0,10"/>
+
+            <!-- Кнопка расчёта энтропии -->
+            <Button Content="Рассчитать энтропию" Width="200" Click="CalculateEntropy_Click" Style="{StaticResource MenuButtonStyle}" Margin="0,0,0,10"/>
+            <TextBlock Name="EntropyResult" Text="Энтропия: " FontSize="14" Foreground="#34495E" Margin="0,10,0,20"/>
+
+            <!-- Кодирование Хаффмана -->
+            <TextBlock Text="Введите текст для кодирования Хаффмана:" Margin="0,0,0,5"/>
+            <TextBox Name="HuffmanInput" Width="300" Margin="0,0,0,10"/>
+
+            <Button Content="Закодировать (Хаффман)" Width="200" Click="EncodeHuffman_Click" Style="{StaticResource MenuButtonStyle}" Margin="0,0,0,10"/>
+            <TextBlock Name="HuffmanResult" Text="Результаты кодирования: " FontSize="14" Foreground="#34495E" Margin="0,10,0,20"/>
+        </StackPanel>
+    </Grid>
+</Page>
